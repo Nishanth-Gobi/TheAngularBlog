@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import post from "./post/post.component";
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
+  user_posts: post[] = []
+
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

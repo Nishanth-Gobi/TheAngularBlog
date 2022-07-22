@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+
+
+type post = {
+  title: string;
+  author: string;
+  date: string | null;
+  content: string;
+}
+
+export default post;
+
+
 
 @Component({
   selector: 'app-post',
@@ -15,9 +28,11 @@ export class PostComponent implements OnInit {
   date: string | null = null;
   content: string = "";
 
+  newPost: post|null = null;
+
   // @Input dateObj: Date = new Date();
 
-  constructor(private datePipe: DatePipe) {
+  constructor(private datePipe: DatePipe, private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -36,6 +51,22 @@ export class PostComponent implements OnInit {
     this.date = this.datePipe.transform(today, 'd/M/yy');
 
     console.log(this.date);
+
+    this.newPost = {
+      'title': title,
+      'author': "author", 
+      'date': this.date,
+      'content': content
+    }
+
+    this.http
+      .post(
+        "https://angular-complete-f99ef-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json", 
+        this.newPost
+      )
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
   }
 
 }

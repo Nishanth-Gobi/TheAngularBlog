@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h3> New Post </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <label>Post Title</label>
+        <input type="text" placeholder="Post title" #title>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col-xs-12">
+        <label>Post Date</label>
+        <input type="date" #date>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <label>Content</label>
+        <input type="text" placeholder="Your post content goes here." #content>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success" (click)="onNewPost(title.value, content.value)">
+            Post
+        </button>
+    </div>
+</div>

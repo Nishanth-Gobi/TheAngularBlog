@@ -7,7 +7,7 @@
     - account
         - login
         - signup
-        - user's posts
+    - users 
     - admin
         - about
         - posts

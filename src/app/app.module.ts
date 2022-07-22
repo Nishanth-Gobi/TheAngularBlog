@@ -8,12 +8,18 @@ import { PostComponent } from './posts/post/post.component';
 
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { AccountComponent } from './account/account.component';
+import { LoginComponent } from './account/login/login.component';
+import { SignupComponent } from './account/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostsComponent,
-    PostComponent
+    PostComponent,
+    AccountComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

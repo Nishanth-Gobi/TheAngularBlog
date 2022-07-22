@@ -1,0 +1,52 @@
+
+<hr>
+<h3>Sign up!</h3>
+<hr>
+
+<form>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        id="exampleInputEmail1" 
+        required
+        name="email" 
+        [(ngModel)]="email" 
+        #mail="ngModel">
+
+      <div *ngIf="mail.errors?.['required']" class="form-text">
+        Email is required
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input 
+        type="password" 
+        class="form-control" 
+        id="exampleInputPassword1" 
+        required 
+        minlength="8" 
+        name="password" 
+        [(ngModel)]="password" 
+        #pass="ngModel">
+
+      <div *ngIf="pass.errors?.['required']" class="form-text">
+        Password is required
+      </div>
+      <div *ngIf="pass.errors?.['minlength']">
+        Password must be at least 8 characters long
+      </div>
+    </div>
+    
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">I accept the <a href="#">user policy</a></label>
+    </div>
+    
+    <button type="submit" class="btn btn-success" (click)="onSignUp()">Sign up!</button>
+    <div class="form-text">Already have an account? <a href="#">Log In</a> instead!</div>
+
+</form>

@@ -4,6 +4,7 @@
 
 - app
     - posts
+        - new post
     - account
         - login
         - signup

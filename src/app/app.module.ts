@@ -13,6 +13,7 @@ import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { RouterModule, Routes } from '@angular/router';
 
+
 const appRoutes: Routes = [
   { path: '', component: PostsComponent},
   { path: 'login', component: LoginComponent},

@@ -1,5 +1,5 @@
     
-<form>
+<form [formGroup]="myForm" (ngSubmit)="onNewPost()">
 
     <p class="text-4xl py-3">
         New Post
@@ -9,7 +9,7 @@
     <div class="py-4">
         <input type="text" class="form-control w-full text-sm text-gray-800 
         bg-white border border-grey-200" 
-        placeholder="Post title" #title>
+        placeholder="Post title" formControlName="title">
     </div>
 
     <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -69,12 +69,14 @@
             <label for="editor" class="sr-only">Publish post</label>
             <textarea id="editor" rows="8" 
                 class="block px-0 w-full text-sm text-gray-800 bg-white border-0" 
-                placeholder="Write an article..." required #content></textarea>
+                placeholder="Write an article..." required formControlName="content"></textarea>
         </div>
     </div>
     <button type="submit" class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-center 
         text-white bg-green-700 rounded-lg focus:ring-4 dark:focus:ring-blue-900 
-        hover:bg-green-800" (click)="onNewPost(title.value, content.value)">
+        hover:bg-green-800"> 
         Publish post
     </button>
  </form>
+
+ <!-- (click)="onNewPost()" -->

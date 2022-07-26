@@ -2,17 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { PostConfig } from "../posts.component";
 
-type post = {
-  title: string;
-  author: string;
-  date: string | null;
-  content: string;
-}
-
-export default post;
-
+import { FirebaseService } from '../firebase.service';
 
 
 @Component({
@@ -23,50 +17,27 @@ export default post;
 })
 export class PostComponent implements OnInit {
 
-  title: string = "";
-  author: string = "";
-  date: string | null = null;
-  content: string = "";
+  myForm: FormGroup = new FormGroup({
+    'title': new FormControl(null, [Validators.required]),
+    'content': new FormControl(null, [Validators.required])
+  })
 
-  newPost: post|null = null;
+  constructor(private datePipe: DatePipe, private http: HttpClient, private firebaseService: FirebaseService) { }
 
-  // @Input dateObj: Date = new Date();
+  ngOnInit(): void { }
 
-  constructor(private datePipe: DatePipe, private http: HttpClient) {
-  }
-
-  ngOnInit(): void {
+  onNewPost(){
     
-  }
-
-  onNewPost(title: string, content: string){
-    
-    this.title = title;
-    this.content = content;
-
-    console.log(title);
-    console.log(content);
-
     let today = new Date();
-    this.date = this.datePipe.transform(today, 'd/M/yy');
 
-    console.log(this.date);
-
-    this.newPost = {
-      'title': title,
+    let newPost: PostConfig = {
+      'title': this.myForm.get('title')?.value,
       'author': "author", 
-      'date': this.date,
-      'content': content
+      'date': this.datePipe.transform(today, 'd/M/yy'),
+      'content': this.myForm.get('content')?.value
     }
 
-    this.http
-      .post(
-        "https://angular-complete-f99ef-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json", 
-        this.newPost
-      )
-      .subscribe(responseData => {
-        console.log(responseData);
-      });
+    this.firebaseService.saveUserPost(newPost);
   }
 
 }

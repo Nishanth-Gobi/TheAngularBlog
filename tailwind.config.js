@@ -8,5 +8,7 @@ module.exports = {
       center: true,
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp')
+  ],
 }

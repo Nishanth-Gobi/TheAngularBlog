@@ -1,27 +1,19 @@
-<app-post>
-    
-</app-post>
 
-<br>
-<hr>
-<br>
-
-<h3> Posts </h3>
-
-<div class="row">
-    <div class="col-xs-12" *ngFor="let user_post of user_posts">
-        
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">{{ user_post['title'] }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ user_post['author'] }}</h6>
-              <hr>
-              <p class="card-text">{{ user_post['content'] }} </p>
-              <hr>
-              <br>
-              <p class="card-text">{{ user_post['date'] }}</p>
-            </div>
-          </div>
-        
+<div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12" *ngFor="let user_post of user_posts">
+  <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+    <div class="mx-auto max-w-md">
+      <p class="text-2xl">fdsag</p>
+      <div class="divide-y divide-gray-300/50">
+        <div class="space-y-6 py-8 text-base leading-7 text-gray-600">
+          <p>{{ user_post['content'] }}</p>
+          <ul class="space-y-4">
+          </ul>
+        </div>
+        <div class="pt-8 text-base font-semibold leading-7">
+          <p class="text-gray-900">{{ user_post['author'] }}</p>
+          <p class="text-gray-900">{{ user_post['date'] }}</p>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

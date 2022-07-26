@@ -14,10 +14,10 @@ import { SignupComponent } from './account/signup/signup.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
-
+  { path: '', component: PostsComponent},
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
-  { path: 'post', component: PostsComponent}
+  { path: 'post', component: PostComponent}
 ];
 
 @NgModule({

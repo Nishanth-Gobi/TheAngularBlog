@@ -1,5 +1,5 @@
 
-<form>
+<form [formGroup]="myForm" (ngSubmit)="onLogIn">
 
     <div class="text-4xl py-3">
       <p class="py-2">
@@ -17,8 +17,7 @@
         id="exampleInputEmail1" 
         aria-describedby="emailHelp" 
         placehoder="user@mail.com"
-        name="email" 
-        [(ngModel)]="email">
+        formControlName="email">
     </div>
     <div class="py-0">
       <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -28,7 +27,7 @@
         bg-white border border-grey-200"
         id="exampleInputPassword1" 
         name="password"
-        [(ngModel)]="password">
+        formControlName="password">
     </div>
     <div class="py-3">
       <button type="submit" class="inline-flex items-center text-sm font-medium text-center text-white

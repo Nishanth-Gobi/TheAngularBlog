@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,8 +9,10 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
 
-  email: string = "";
-  password: string = "";
+  myForm: FormGroup = new FormGroup({
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [Validators.required, Validators.minLength(8)])
+  });
 
   constructor(private router: Router) { }
 
@@ -17,7 +20,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSignUp(){
-    console.log(this.password, this.email);
+    console.log(this.myForm.get('email')?.value, this.myForm.get('password')?.value);
     // this.router.navigate(['']);
   }
 }

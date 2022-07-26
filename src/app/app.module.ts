@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './posts/post/post.component';
 
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AccountComponent } from './account/account.component';
 import { LoginComponent } from './account/login/login.component';
@@ -33,6 +33,7 @@ const appRoutes: Routes = [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],

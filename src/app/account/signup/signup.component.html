@@ -1,5 +1,5 @@
 
-<form>
+<form [formGroup]="myForm" (ngSubmit)="onSignUp">
 
   <div class="text-4xl py-3">
     <p class="py-2">
@@ -17,10 +17,9 @@
         id="exampleInputEmail1" 
         required
         name="email" 
-        [(ngModel)]="email" 
-        #mail="ngModel">
+        formControlName="email">
 
-      <div *ngIf="mail.errors?.['required']" class="form-text">
+      <div *ngIf="myForm.get('mail')?.errors?.['required']" class="form-text">
         Email is required
       </div>
     </div>
@@ -35,13 +34,12 @@
         required 
         minlength="8" 
         name="password" 
-        [(ngModel)]="password" 
-        #pass="ngModel">
+        formControlName="password">
 
-      <div *ngIf="pass.errors?.['required']" class="form-text">
+      <div *ngIf="myForm.get('pass')?.errors?.['required']" [ngClass]="'error'" class="form-text">
         Password is required
       </div>
-      <div *ngIf="pass.errors?.['minlength']">
+      <div *ngIf="myForm.get('pass')?.errors?.['minlength']">
         Password must be at least 8 characters long
       </div>
     </div>

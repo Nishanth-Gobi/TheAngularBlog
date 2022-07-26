@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -8,17 +9,27 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  email: string = "";
-  password: string = "";
+  myForm: FormGroup  = new FormGroup({
+    'email': new FormControl(null, [Validators.required, Validators.email]),
+    'password': new FormControl(null, [Validators.required, Validators.minLength(8)])
+  });
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    
   }
 
   onLogIn() {
-    console.log(this.email, this.password);
+
+    let email = this.myForm.get('email');
+    let password = this.myForm.get('password');
+
+    console.log(email, password);
+
+    if(true){
     // this.router.navigate([''];)
+    }
   }
 
 }

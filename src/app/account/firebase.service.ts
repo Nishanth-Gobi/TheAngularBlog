@@ -4,21 +4,36 @@ import { Injectable } from "@angular/core";
 import { ApiHttpService } from "../app.service";
 import { Constants } from "../constants";
 
+import { User } from "../account/account.component";
+import { map } from "rxjs";
+
+
 @Injectable({
     providedIn: 'root'
 })
 export class FirebaseService{
 
-    user_data: {[key: string]: string} = {};
+    constructor(private api: ApiHttpService, private http: HttpClient, private constants: Constants){ 
 
-    constructor(private api: ApiHttpService, private http: HttpClient, private constants: Constants){ }
+        // localStorage.clear();
+    }
 
     loadUserDataToLocal(){
 
+// De bug
+
         let loadUrl = this.constants.FIREBASE_ROOT_URL + 'users.json'
 
-        let UserData = this.api.get(loadUrl);
-        console.log(UserData); 
+        this.http
+        .get<{ [key: string]: User }>(loadUrl)
+        .pipe(map((responseData: {[key: string]: User}) => {
+
+            for(const key in responseData){
+
+                console.log(key, responseData[key]);
+                localStorage.setItem(responseData[key].email, responseData[key].password);
+            }
+        }));
     }
 
     ngOnInit(){
@@ -30,8 +45,7 @@ export class FirebaseService{
         let registerUrl = this.constants.FIREBASE_ROOT_URL + 'users.json';
 
         // check for duplicates
-
-        if (!(email in this.user_data)){
+        if (localStorage.getItem(email) == null){
 
             // Move the data to Firebase after the session?
             this.api
@@ -40,13 +54,13 @@ export class FirebaseService{
                 console.log(responseData)
             });
     
-            // this.user_data[email] = password;
+            // store credentials in local storage
             localStorage.setItem(email, password);
             return true;
         }
         else{
-            console.log("Error: Duplicate email entry");
 
+            console.log("Error: Duplicate email entry");
             return false;
         }
     }
@@ -60,10 +74,9 @@ export class FirebaseService{
                 return true;
             }
         }
+        else{
+
+        }
         return false;
-        
-        // else{
-        //     this.loadUserDataToLocal();
-        // }
     }
 }

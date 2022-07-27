@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 
 import { FirebaseService } from "../posts/firebase.service";
 
+// Interface representing the Post type 
 export interface PostConfig {
   title: string;
   author: string;
@@ -12,6 +13,7 @@ export interface PostConfig {
   content: string | null; 
 }
 
+// Interface representing the type of post collection 
 export interface PostsResponseConfig extends Array<PostConfig> {}
 
 
@@ -24,48 +26,54 @@ export class PostsComponent implements OnInit {
 
   user_posts: PostsResponseConfig = [];
 
+  // Boolean vaiable to control rendering the HTML 
   isDataAvailable: boolean = false;
 
   constructor(private http: HttpClient, private firebase: FirebaseService) { }
 
-  getUserPosts(){
+  // Procedure to get posts from Firebase
+  // getUserPosts(){
         
-    this.http
-      .get<{ [key: string]: PostConfig }>(
-        "https://angular-complete-f99ef-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json"
-      )
-      .pipe(map((responseData: { [key: string]: PostConfig }) => {
-        const postsArray: PostsResponseConfig = [];
-        for (const key in responseData) {
-          if( responseData.hasOwnProperty(key)){
-            postsArray.push({ ...responseData[key] });
-          }
-        }
-        return postsArray;
-      }))
-      .subscribe((posts: PostsResponseConfig) => {
-        this.user_posts  = posts;
-        // posts.forEach(post => this.user_posts.push(Object.assign({}, post)))
+  //   this.http
+  //     .get<{ [key: string]: PostConfig }>(
+  //       "https://angular-complete-f99ef-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json"
+  //     )
+  //     .pipe(map((responseData: { [key: string]: PostConfig }) => {
+  //       const postsArray: PostsResponseConfig = [];
+  //       for (const key in responseData) {
+  //         if( responseData.hasOwnProperty(key)){
+  //           postsArray.push({ ...responseData[key] });
+  //         }
+  //       }
+  //       return postsArray;
+  //     }))
+  //     .subscribe((posts: PostsResponseConfig) => {
+  //       this.user_posts  = posts;
+  //       // posts.forEach(post => this.user_posts.push(Object.assign({}, post)))
 
-        console.log(this.user_posts);    
-      })
-  }
-
-  ngOnInit() {
-    this.getUserPosts();
-  }
-
-  // async ngOnInit(): Promise<void> {
-
-  //   try {
-      
-  //     this.user_posts = await this.firebase.getUserPosts();
-  //   } catch (error) {
-      
-  //     console.log(this.user_posts);
-  //     this.isDataAvailable = true;
-  //   }
-
+  //       console.log(this.user_posts);    
+  //     })
   // }
 
+  // ngOnInit() {
+  //   this.getUserPosts();
+  // }
+
+  async ngOnInit(): Promise<void> {
+
+    try {
+      
+      this.firebase.getPosts()
+      .subscribe((posts: PostsResponseConfig) => {
+
+        this.user_posts = posts;
+        this.isDataAvailable = true;
+        console.log(posts);
+      })
+
+    } catch (error) {
+      
+      console.log("Error: ", error);
+    }
+  }
 }

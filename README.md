@@ -15,3 +15,4 @@
         - users   
     
 - Form validation
+- Features to add to 'New Post;

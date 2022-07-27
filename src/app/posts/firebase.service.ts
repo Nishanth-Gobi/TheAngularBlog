@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiHttpService } from "../app.service";
 
-import { map } from "rxjs";
+import { map, Observable } from "rxjs";
 
 import { Constants, PostGet } from "../constants";
 import { PostConfig, PostsResponseConfig } from "./posts.component";
@@ -51,6 +51,23 @@ export class FirebaseService{
         })
 
         return user_posts;
+    }
+
+    getPosts(): Observable<any> {
+        
+        let getUrl = this.constants.FIREBASE_ROOT_URL + 'posts.json';
+
+        return this.http
+            .get<{ [key: string]: PostConfig}>(getUrl)
+            .pipe(map((responseData: { [key: string]: PostConfig }) => {
+                const postsArray: PostsResponseConfig = [];
+                for (const key in responseData) {
+                    if( responseData.hasOwnProperty(key)){
+                        postsArray.push({ ...responseData[key] });
+                    }
+                }
+                return postsArray;
+            }))        
     }
 
 }

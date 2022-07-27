@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FirebaseService } from '../firebase.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
     'password': new FormControl(null, [Validators.required, Validators.minLength(8)])
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
     
@@ -22,13 +23,18 @@ export class LoginComponent implements OnInit {
 
   onLogIn() {
 
-    let email = this.myForm.get('email');
-    let password = this.myForm.get('password');
+    let email = this.myForm.get('email')!.value;
+    let password = this.myForm.get('password')!.value;
 
     console.log(email, password);
 
-    if(true){
-    // this.router.navigate([''];)
+    if(this.firebase.authenticateUser(email, password)){
+    
+      this.router.navigate(['']);
+    }
+    else{
+
+      console.log("Error on Login()");
     }
   }
 

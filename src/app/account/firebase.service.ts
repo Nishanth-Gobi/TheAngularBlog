@@ -40,8 +40,8 @@ export class FirebaseService{
                 console.log(responseData)
             });
     
-            this.user_data[email] = password;
-
+            // this.user_data[email] = password;
+            localStorage.setItem(email, password);
             return true;
         }
         else{
@@ -53,10 +53,10 @@ export class FirebaseService{
 
     authenticateUser(email: string, password: string){
 
-        if (email in this.user_data){
+        if (localStorage.getItem(email)!=null){
 
-            if (this.user_data[email] == password){
-
+            if (localStorage.getItem(email) == password){
+                
                 return true;
             }
         }

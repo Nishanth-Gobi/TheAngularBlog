@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../firebase.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,13 +15,29 @@ export class SignupComponent implements OnInit {
     password: new FormControl(null, [Validators.required, Validators.minLength(8)])
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private firebase: FirebaseService) { }
 
   ngOnInit(): void {
   }
 
   onSignUp(){
-    console.log(this.myForm.get('email')?.value, this.myForm.get('password')?.value);
-    // this.router.navigate(['']);
+    
+    let email = this.myForm.get('email')!.value;
+    let password = this.myForm.get('password')!.value;
+    
+    console.log(email, password);
+    
+    if(this.myForm.get('email') && this.myForm.get('password')){
+
+      if (this.firebase.registerUser(this.myForm.get('email')!.value, this.myForm.get('password')!.value)){
+
+        //redirect to Home
+
+      }  
+    }
+    else{
+
+      console.log("Error onSignup()");
+    }
   }
 }

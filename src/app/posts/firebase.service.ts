@@ -3,7 +3,7 @@ import { ApiHttpService } from "../app.service";
 
 import { map, Observable } from "rxjs";
 
-import { Constants, PostGet } from "../constants";
+import { Constants } from "../constants";
 import { PostConfig, PostsResponseConfig } from "./posts.component";
 import { HttpClient } from "@angular/common/http";
 

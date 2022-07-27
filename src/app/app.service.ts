@@ -1,9 +1,8 @@
 
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Config } from "tailwindcss";
 
-import { PostConfig } from "../app/posts/posts.component";
+import { PostGet } from "../app/constants";
 
 @Injectable({
 
@@ -15,7 +14,7 @@ export class ApiHttpService {
 
     get(url: string, options?: any){
 
-        return this.http.get<Config>(url, options);
+        return this.http.get(url, options);
     }   
 
     post(url: string, data: any, options?: any){
@@ -31,13 +30,6 @@ export class ApiHttpService {
     delete(url: string, options?: any){
 
         return this.http.delete(url, options);
-    }
-
-    get_posts(url: string, options?: any){
-
-        type get_config = { [key: string]: PostConfig }
-
-        return this.http.get<get_config>(url, options);
     }
 
 }

@@ -3,8 +3,9 @@ import { ApiHttpService } from "../app.service";
 
 import { map } from "rxjs";
 
-import { Constants } from "../constants";
+import { Constants, PostGet } from "../constants";
 import { PostConfig, PostsResponseConfig } from "./posts.component";
+import { HttpClient } from "@angular/common/http";
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { PostConfig, PostsResponseConfig } from "./posts.component";
 })
 export class FirebaseService{
 
-    constructor(private api: ApiHttpService, private constants: Constants){
+    constructor(private api: ApiHttpService, private constants: Constants, private http: HttpClient){
 
     }
 
@@ -27,32 +28,27 @@ export class FirebaseService{
         });
     }
 
-    getUserPosts(){
+    async getUserPosts(){
 
         let getUrl = this.constants.FIREBASE_ROOT_URL + 'posts.json';
-
         let user_posts: PostsResponseConfig = [];
 
-        let api_response = this.api.get_posts(getUrl);
+        this.http
+        .get<{ [key: string]: PostConfig}>(getUrl)
+        .pipe(map((responseData: { [key: string]: PostConfig }) => {
+            const postsArray: PostsResponseConfig = [];
+            for (const key in responseData) {
+                if( responseData.hasOwnProperty(key)){
+                    postsArray.push({ ...responseData[key] });
+                }
+            }
+            return postsArray;
+        }))        
+        .subscribe((posts: PostsResponseConfig) => {
 
-        
-
-        // api_response.pipe(map((responseData: { [key: string]: PostConfig }) => {
-        //     const postsArray: PostsResponseConfig = [];
-        //     for (const key in responseData) {
-        //       if( responseData.hasOwnProperty(key)){
-        //         postsArray.push({ ...responseData[key] });
-        //       }
-        //     }
-        //     return postsArray;
-        //   }))
-
-        
-        // .subscribe((posts: PostsResponseConfig) => {
-
-        //     user_posts = posts;
-        //     console.log(posts);
-        //   })
+            user_posts = posts;
+            console.log(posts);
+        })
 
         return user_posts;
     }

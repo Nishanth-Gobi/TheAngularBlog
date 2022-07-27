@@ -1,8 +1,8 @@
+// Service to handle basic Http requests 
 
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { PostGet } from "../app/constants";
 
 @Injectable({
 

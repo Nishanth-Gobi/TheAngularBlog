@@ -17,6 +17,7 @@ export class FirebaseService{
 
     }
 
+    // Procedure to save user's post in Firebase upon post submission
     saveUserPost(Post: PostConfig){
 
         let saveUrl = this.constants.FIREBASE_ROOT_URL + 'posts.json';
@@ -28,31 +29,7 @@ export class FirebaseService{
         });
     }
 
-    async getUserPosts(){
-
-        let getUrl = this.constants.FIREBASE_ROOT_URL + 'posts.json';
-        let user_posts: PostsResponseConfig = [];
-
-        this.http
-        .get<{ [key: string]: PostConfig}>(getUrl)
-        .pipe(map((responseData: { [key: string]: PostConfig }) => {
-            const postsArray: PostsResponseConfig = [];
-            for (const key in responseData) {
-                if( responseData.hasOwnProperty(key)){
-                    postsArray.push({ ...responseData[key] });
-                }
-            }
-            return postsArray;
-        }))        
-        .subscribe((posts: PostsResponseConfig) => {
-
-            user_posts = posts;
-            console.log(posts);
-        })
-
-        return user_posts;
-    }
-
+    // Procedure to get posts from Firebase
     getPosts(): Observable<any> {
         
         let getUrl = this.constants.FIREBASE_ROOT_URL + 'posts.json';
